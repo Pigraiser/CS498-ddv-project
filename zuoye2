@@ -1,0 +1,13 @@
+import pandas as pd
+import requests
+import json
+import openpyxl
+url="https://v6.exchangerate-api.com/v6/e96add1f4617560fda8d9b78/latest/USD"
+response = requests.get(url)
+data_json=response.json()['conversion_rates']
+col_name=['currency','rate']
+data_set=pd.DataFrame(columns=col_name)
+for i in data_json.keys():
+    size=data_set.size
+    data_set.loc[size]=[i,data_json[i]]
+data_set.to_excel('currency_data.xlsx')
